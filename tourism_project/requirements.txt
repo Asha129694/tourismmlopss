@@ -1,0 +1,6 @@
+pandas==2.3.3
+scikit-learn==1.7.2
+xgboost==3.0.5
+mlflow==3.0.1
+joblib==1.5.2
+sqlalchemy==2.0.43
