@@ -4,3 +4,5 @@ xgboost==3.0.5
 mlflow==3.0.1
 joblib==1.5.2
 sqlalchemy==2.0.43
+matplotlib==3.10.7
+pytest==8.4.2
