@@ -1,0 +1,117 @@
+{
+  "trained_at_utc": "2026-11-10T13:20:03+00:00",
+  "model_sha256": "e7daf601ac8d052b945ad3649354f5326d3836c1bd8b6f30da31a26fc9955291",
+  "purpose": "Propensity to buy a tourism package (historical ProdTaken label) using pre-contact customer attributes only; not Wellness-specific.",
+  "features": [
+    "Age",
+    "CityTier",
+    "NumberOfPersonVisiting",
+    "PreferredPropertyStar",
+    "NumberOfTrips",
+    "Passport",
+    "OwnCar",
+    "NumberOfChildrenVisiting",
+    "MonthlyIncome",
+    "Occupation",
+    "Gender",
+    "MaritalStatus",
+    "Designation"
+  ],
+  "threshold": 0.19,
+  "threshold_method": "max F2 on out-of-fold training predictions",
+  "best_params": {
+    "learning_rate": 0.1,
+    "max_depth": 6,
+    "min_child_weight": 1,
+    "n_estimators": 300,
+    "reg_lambda": 1,
+    "subsample": 1.0
+  },
+  "n_train": 3302,
+  "n_test": 826,
+  "cv_pr_auc_train": 0.9999992355675147,
+  "cv_pr_auc_validation": 0.7874889856684644,
+  "test_metrics": {
+    "threshold": 0.19,
+    "roc_auc": 0.9234062214175932,
+    "pr_auc": 0.7920566435499705,
+    "accuracy": 0.8317191283292978,
+    "precision": 0.5390625,
+    "recall": 0.8679245283018868,
+    "f1": 0.6650602409638554,
+    "f2": 0.773542600896861,
+    "tn": 549,
+    "fp": 118,
+    "fn": 21,
+    "tp": 138
+  },
+  "train_metrics": {
+    "threshold": 0.19,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "accuracy": 0.9612356147789218,
+    "precision": 0.8328981723237598,
+    "recall": 1.0,
+    "f1": 0.9088319088319088,
+    "f2": 0.9614225437010248,
+    "tn": 2536,
+    "fp": 128,
+    "fn": 0,
+    "tp": 638
+  },
+  "test_metrics_at_0.5": {
+    "threshold": 0.5,
+    "roc_auc": 0.9234062214175932,
+    "pr_auc": 0.7920566435499705,
+    "accuracy": 0.910411622276029,
+    "precision": 0.7777777777777778,
+    "recall": 0.7484276729559748,
+    "f1": 0.7628205128205128,
+    "f2": 0.7541191381495564,
+    "tn": 633,
+    "fp": 34,
+    "fn": 40,
+    "tp": 119
+  },
+  "baselines": {
+    "contact_everyone": {
+      "roc_auc": 0.5,
+      "pr_auc": 0.19249394673123488,
+      "precision": 0.19249394673123488,
+      "recall": 1.0,
+      "f1": 0.32284263959390863
+    },
+    "logistic_regression": {
+      "threshold": 0.45,
+      "roc_auc": 0.7997604971099357,
+      "pr_auc": 0.5440662471381785,
+      "accuracy": 0.6876513317191283,
+      "precision": 0.3597733711048159,
+      "recall": 0.7987421383647799,
+      "f1": 0.49609375,
+      "f2": 0.6420626895854399,
+      "tn": 441,
+      "fp": 226,
+      "fn": 32,
+      "tp": 127
+    }
+  },
+  "cumulative_gains": {
+    "10": 0.4779874213836478,
+    "20": 0.7672955974842768,
+    "30": 0.8616352201257862,
+    "40": 0.9119496855345912,
+    "50": 0.9308176100628931,
+    "60": 0.9622641509433962,
+    "70": 0.9811320754716981,
+    "80": 1.0,
+    "90": 1.0,
+    "100": 1.0
+  },
+  "versions": {
+    "python": "3.11.18",
+    "scikit-learn": "1.7.2",
+    "xgboost": "3.0.5",
+    "pandas": "2.3.3"
+  }
+}
