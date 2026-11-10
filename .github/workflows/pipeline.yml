@@ -9,6 +9,11 @@ on:
 permissions:
   contents: write
 
+# Only one run at a time, so two runs never update the model on main concurrently
+concurrency:
+  group: tourism-pipeline
+  cancel-in-progress: false
+
 jobs:
   register-dataset:
     runs-on: ubuntu-latest
@@ -19,6 +24,8 @@ jobs:
           python-version: "3.11"
       - name: Install Dependencies
         run: pip install -r tourism_project/requirements.txt
+      - name: Data Quality Tests
+        run: python -m pytest tourism_project/tests -q
       - name: Register Dataset
         run: python tourism_project/model_building/data_register.py
       - name: Upload Registered Dataset
@@ -67,15 +74,22 @@ jobs:
         run: |
           nohup mlflow ui --host 0.0.0.0 --port 5000 &
           sleep 5
-      - name: Model Building
+      - name: Model Building (fails the job if the promotion gate rejects the model)
         env:
           MLFLOW_TRACKING_URI: http://localhost:5000
         run: python tourism_project/model_building/train.py
+      - name: Upload Model Evaluation Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-report
+          path: reports/
+          if-no-files-found: ignore
       - name: Commit Trained Model
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
-          git add tourism_project/deployment/best_model.joblib
+          git add tourism_project/deployment/best_model.joblib tourism_project/deployment/model_metadata.json
           git commit -m "Add trained model [skip ci]" || echo "No changes to commit"
+          git pull --rebase origin main
           git push origin HEAD:main
