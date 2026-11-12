@@ -89,7 +89,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # main may have moved while this run was training (for example files pushed from the notebook).
+          # Keep the freshly trained model files, move to the latest main, and commit them on top, so no merge conflict can occur.
+          mkdir -p /tmp/model_out
+          cp tourism_project/deployment/best_model.joblib tourism_project/deployment/model_metadata.json /tmp/model_out/
+          git fetch origin main
+          git reset --hard origin/main
+          cp /tmp/model_out/best_model.joblib /tmp/model_out/model_metadata.json tourism_project/deployment/
           git add tourism_project/deployment/best_model.joblib tourism_project/deployment/model_metadata.json
           git commit -m "Add trained model [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main
           git push origin HEAD:main
