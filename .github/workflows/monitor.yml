@@ -1,0 +1,31 @@
+name: Model Monitoring
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"      # every Monday 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Dependencies
+        run: pip install pandas==2.3.3 scikit-learn==1.7.2 xgboost==3.0.5 joblib==1.5.2 requests
+      - name: Drift, Integrity and Health Checks
+        env:
+          APP_URL: https://tourism-wellness-asha129.streamlit.app
+        run: python tourism_project/monitoring/monitor.py
+      - name: Upload Monitoring Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-report
+          path: monitoring_report.json
+          if-no-files-found: ignore
