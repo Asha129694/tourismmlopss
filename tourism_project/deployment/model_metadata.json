@@ -1,5 +1,5 @@
 {
-  "trained_at_utc": "2026-11-12T21:46:17+00:00",
+  "trained_at_utc": "2026-11-12T21:49:46+00:00",
   "model_sha256": "e7daf601ac8d052b945ad3649354f5326d3836c1bd8b6f30da31a26fc9955291",
   "purpose": "Propensity to buy a tourism package (historical ProdTaken label) using pre-contact customer attributes only; not Wellness-specific.",
   "features": [
